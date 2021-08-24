@@ -12,7 +12,7 @@ public interface QuestionService {
 
 	public QuestionPostResponse addQuestion(QuestionPostRequest request);
 
-	public List<QuestionData> getQuestions(Integer pageNo);
+	public List<QuestionData> getQuestions(String tags);
 
 	public QuestionData getQuestionById(String id);
 

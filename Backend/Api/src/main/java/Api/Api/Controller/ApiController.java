@@ -43,9 +43,10 @@ public class ApiController {
 	private QuestionService questionService;
 
 	@GetMapping("/questions")
-	public ResponseEntity<List<QuestionData>> getQuestions(Integer pageNo) throws EntityNotFoundException {
+	public ResponseEntity<List<QuestionData>> getQuestions(@RequestParam(value = "tags", required = false) String tags)
+			throws EntityNotFoundException {
 		log.info("Get with Params Controller Started");
-		return new ResponseEntity<>(questionService.getQuestions(pageNo), HttpStatus.OK);
+		return new ResponseEntity<>(questionService.getQuestions(tags), HttpStatus.OK);
 	}
 
 	@GetMapping("/question/{questionId}")

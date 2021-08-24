@@ -67,17 +67,19 @@ public class QuestionServiceImpl  implements QuestionService{
 
 
 	@Override
-	public List<QuestionData> getQuestions(Integer pageNo) {
+	public List<QuestionData> getQuestions(String tags) {
 		// TODO Auto-generated method stub
 		log.info("getLoads service with params started");
-
-		if (pageNo == null)
-			pageNo = 0;
-
-		//Pageable currentPage = PageRequest.of( Sort.Direction.DESC, "timestamp");
 		Sort s=Sort.by( Sort.Direction.DESC, "timestamp");
 
 		List<QuestionData> list = null;
+
+		if(tags!=null) {
+			list=questionDao.findByTags(tags);
+			return list;
+		}
+		//Pageable currentPage = PageRequest.of( Sort.Direction.DESC, "timestamp");
+		
 
 		try {
 
