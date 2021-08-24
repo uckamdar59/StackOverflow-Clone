@@ -10,6 +10,7 @@ import Api.Api.Dao.UserDao;
 import Api.Api.Entities.UserData;
 import Api.Api.Exception.EntityNotFoundException;
 import Api.Api.Model.UserPostRequest;
+import Api.Api.Model.UserPostResponse;
 
 @Service
 @Slf4j
@@ -18,13 +19,21 @@ public class UserServiceImpl implements UserService {
 	private UserDao userDao;
 
 	@Override
-	public void addUser(UserPostRequest request) {
+	public UserPostResponse addUser(UserPostRequest request) {
 
 		UserData data = new UserData();
-
+		UserPostResponse response = new UserPostResponse();
+		
 		data.setUsername(request.getUsername());
 		data.setPassword(request.getPassword());
 
+		if( String.valueOf(userDao.findById(request.getUsername())) != "Optional.empty") {
+			System.err.println(userDao.findById(request.getUsername()));
+			response.setStatus("Already exist");
+			response.setUsername(data.getUsername());
+			return response;
+		}
+		
 		try {
 			userDao.save(data);
 			log.info("User Data is saved");
@@ -32,7 +41,10 @@ public class UserServiceImpl implements UserService {
 			log.error("User Data is not saved -----" + String.valueOf(ex));
 			throw ex;
 		}
-
+		response.setStatus("Successfully Created");
+		response.setUsername(data.getUsername());
+		
+		return response;
 	}
 
 	@Override

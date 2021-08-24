@@ -29,6 +29,7 @@ import Api.Api.Model.QuestionPostResponse;
 import Api.Api.Model.QuestionPutRequest;
 import Api.Api.Model.QuestionPutResponse;
 import Api.Api.Model.UserPostRequest;
+import Api.Api.Model.UserPostResponse;
 import Api.Api.Service.AnswerService;
 import Api.Api.Service.QuestionService;
 import Api.Api.Service.UserService;
@@ -111,23 +112,23 @@ public class ApiController {
 	private UserService userService;
 
 	@GetMapping("/signup")
-	public ResponseEntity<List<UserData>> getBid() throws EntityNotFoundException {
+	public ResponseEntity<List<UserData>> getUser() throws EntityNotFoundException {
 		log.info("Get with Params Controller Started");
 		return new ResponseEntity<>(userService.getUsers(), HttpStatus.OK);
 	}
 
 	@GetMapping("/signup/{username}")
-	public ResponseEntity<UserData> getBidById(@PathVariable String Id) throws EntityNotFoundException {
+	public ResponseEntity<UserData> getUserById(@PathVariable String Id) throws EntityNotFoundException {
 		log.info("Get Controller Started");
 		return new ResponseEntity<>(userService.getUserById(Id), HttpStatus.OK);
 	}
 
 	@PostMapping("/signup")
-	public ResponseEntity<Object> addBid(@RequestBody UserPostRequest userPostRequest) {
+	public ResponseEntity<UserPostResponse> addUser(@Valid @RequestBody UserPostRequest userPostRequest) {
 
 		log.info("Post Controller Started");
-		userService.addUser(userPostRequest);
-		return new ResponseEntity<>("Successfully Created", HttpStatus.CREATED);
+		
+		return new ResponseEntity<>(userService.addUser(userPostRequest), HttpStatus.CREATED);
 	}
 
 }

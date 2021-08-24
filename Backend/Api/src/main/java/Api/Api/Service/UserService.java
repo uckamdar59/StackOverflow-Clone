@@ -4,11 +4,13 @@ import java.util.List;
 
 import Api.Api.Entities.UserData;
 import Api.Api.Model.UserPostRequest;
+import Api.Api.Model.UserPostResponse;
 
 
 
 public interface UserService {
-	public void addUser(UserPostRequest request);
+	
+	public UserPostResponse addUser(UserPostRequest request);
 
 	public List<UserData> getUsers();
 
